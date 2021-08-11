@@ -1,0 +1,229 @@
+﻿<script src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/js/angular/HomePage/HHHPages.js"></script>
+<script src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/js/angular/Templates/HomePageSearchpopup.js"></script>
+<!--<script src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/js/angular/HomePage/DetailsTemplate.js"></script>-->
+
+<div ng-controller="HHHPagesController" ng-cloak>
+    <!--VACANCY SECTION-->
+    <!-- Page Title
+    ============================================= -->
+    <section id="page-title" class="page-title-parallax page-title-dark"
+             data-bottom-top="background-position:0px 300px;" data-top-bottom="background-position:0px -300px;">
+
+        <div class="container text-center clearfix" ng-repeat="Item in ParentItem">
+            <h1 class="nott mb-3" ng-bind-html="Item.ShortDescription | trustedHTML">
+            </h1>
+            <a ng-if="isOwner" class="hreflink" ng-click="EditPopup(Item,'ShortDescription')">
+                <img class="edit-svg"
+                     ng-src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/hhh/images/edit.svg">
+            </a>
+
+            <span ng-bind-html="Item.Description | trustedHTML"></span>
+        </div>
+
+
+    </section><!-- #page-title end -->
+    <!-- Content
+        ============================================= -->
+    <section id="content">
+        <div class="content-wrap">
+            <div class="container clearfix">
+                <section class="page-section ">
+                    <div class="container clearfix">
+                        <!--<div class="col-sm-12 text-right mb-10">
+                            <button type="button" class="btn btn-primary"ng-click="openContentManagementPopup()">Add Item</button>
+
+                        </div>-->
+                        <!-- Item 1 -->
+
+                        <div class="job-item" ng-repeat="childItem in Child |  orderBy:'SortOrder':false">
+                            <span ng-if="isOwner" class="edit-popp hreflink" ng-click="EditPopup(childItem,'VacanciesChild')">
+                                <img class="edit-svg"
+                                     ng-src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/hhh/images/edit.svg">
+                            </span>
+                            <a ng-href="https://hhhhteams.sharepoint.com/sites/HHHHTeams/sp/SitePages/Details.aspx?ItemId={{childItem.Id}}"
+                               target="_blank">
+                                <div class="toggle-header">
+                                    <div class="toggle-title">
+                                        <div class="col-sm-12 fancy-title">
+                                            <h3>
+                                                {{childItem.Title}}
+                                            </h3>
+                                            <!--<span class="info-tooltip">
+                                                <i class="icon-info-circle"></i>
+                                                <div class="tooltiphover">
+                                                    <div class="tooltipheader">{{childItem.Title}}</div>
+                                                    <div class="tooltipdescription"
+                                                        ng-bind-html="childItem.Description | trustedHTML">
+                                                    </div>
+                                                </div>
+                                            </span>-->
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-sm-12  p-0  clearfix ">
+                                    <div ng-show="childItem.ShortDescription==undefined" class="col-sm-9 pull-left ">
+                                        <p ng-bind-html="childItem.DescrptionChild | trustedHTML "></p>
+                                    </div>
+                                    <div ng-show="childItem.ShortDescription!=undefined" class="col-sm-9 pull-left ">
+                                        <p ng-bind-html="childItem.ShortDescription | trustedHTML "></p>
+                                    </div>
+                                    <div class="col-sm-3 pull-right text-right">
+                                        <a ng-href="https://hhhhteams.sharepoint.com/sites/HHHHTeams/sp/SitePages/Details.aspx?ItemId={{childItem.Id}}" target="_blank" class="button button-reveal button-blue text-right">
+                                            <i class="icon-angle-right"></i><span>CLICK TO READ MORE</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </a>
+
+                        </div>
+
+
+
+
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section><!-- #content end -->
+    <!--END OF VACANCY SECTION-->
+    <!--
+        <div class="heading-block fancy-title border-bottom-0 title-bottom-border">
+            <div>
+                <h4>
+                    {{item.Title}}
+                    <a ng-if="isOwner" class="hreflink" ng-click="EditItem(item)">
+                        <img class="edit-svg" ng-src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/hhh/images/edit.svg">
+                    </a>
+                </h4>
+                <p ng-bind-html="item.Description | trustedHTML"></p>
+            </div>
+        </div> -->
+    <div id="myModall" class="mymodal">
+        <!-- Modal content -->
+        <div class="mymodal-content">
+            <div class="mymodal-header">
+                <button type="button" class="close" data-dismiss="modal" ng-click="cancelHomePagePopup()"
+                        style="min-width: 10px;">
+                    &times;
+                </button>
+                <hhhh-Page-settings-info webpartid="'EditContentPopup'"></hhhh-Page-settings-info>
+                <h3 class="modal-title">
+                    Edit item
+                </h3>
+            </div>
+            <div class="mymodal-body">
+                <div class="row tab-content bdrbox mb-10">
+                    <div class="col-sm-12 form-group">
+                        <label>Title</label>
+                        <input type="text" autocomplete="off" class="form-control" ng-model="Item.ShortDescription" />
+                    </div>
+
+                    <div class="col-sm-12 padL-0 PadR0">
+                        <label>Description</label>
+
+                        <div id="ADDParentDescription"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="col-sm-12 d-flex pl-0 pr-0">
+                    <div class="col-sm-6 pl-0">
+                        <div class="col-sm-12">
+                            Created <span>{{Item.Created}}</span> by<a>
+                                <span class="footerUsercolor">{{Item.Author.Title}}</span><a />
+                        </div>
+                        <div class="col-sm-12">
+                            Last modified <span>{{Item.Modified}}</span> by<a>
+                                <span class="footerUsercolor">{{Item.Editor.Title}}</span><a>
+                        </div>
+                        <div class="col-sm-12">
+                            <!--<a ng-if="isOwner==true" style="cursor:pointer" ng-click="DeleteItem(Item);" class="ng-scope"><img src="/_layouts/images/delete.gif"> Delete this item</a>-->
+                        </div>
+                    </div>
+                    <div class="col-sm-6 text-right pr-0">
+                        <a ng-href="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Lists/Home%20Content/EditForm.aspx?ID={{Item.Id}}"
+                           target="_blank">Open out-of-the-box form</a>
+                        <button type="button" class="btn btn-primary" ng-click="saveHomePagePopup(Item,'Vacancies')">
+                            Save
+                        </button>
+                        <!--ng-disabled="projectForm.$error.required || projectForm.$error.pattern"-->
+                        <button type="button" class="btn btn-default" ng-click="cancelHomePagePopup()">Cancel</button>
+                    </div>
+                </div>
+                <!--<div class="mymodal-footer">
+                    <h3>Modal Footer</h3>
+                </div>-->
+            </div>
+        </div>
+
+    </div>
+    <div id="CreateChildpoup" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="false" style="display: none;">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="panel-title">
+                    <button type="button" style="min-width:10px;" class="close" ng-click="cancelHomePagePopup();">
+                        &times;
+                    </button>
+                    <span>
+                        <page-settings-info webpartid="'sharewebCreateChildItemPopup'"></page-settings-info>
+                    </span>
+                    <h3 class="my-1">
+                        Create Item
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <div class="col-sm-12 tab-content bdrbox">
+                        <div class="col-sm-12">
+                            <div class="col-sm-12  padL-0 PadR0" ng-repeat="item in ChildItemTitle">
+                                <label class="col-sm-12 padL-0 text-capitalize">Title</label>
+
+                                <div class="row">
+                                    <div class="col-sm-11">
+                                        <input class="form-control full_width mb-10" type="text" ng-model="item.Title"
+                                               placeholder="Enter Child Item Title" ng-required="true">
+                                    </div>
+
+                                    <div class="col-sm-1 padL-0">
+                                        <a ng-show="ChildItemTitle.length>1 && $index!=0 " style="cursor:pointer;"
+                                           title="Delete" data-toggle="modal"
+                                           ng-click="RemoveFeedbackColumn(ChildItemTitle,$index,'')">
+                                            <img class="" ng-src="/_layouts/images/delete.gif">
+                                        </a>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div ng-repeat-end></div>
+                            <div class="clearfix">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="hreflink pull-left posleft" ng-click="addNewTextField()">
+                        <img class="icon-sites-img"
+                             ng-src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/SiteCollectionImages/ICONS/Shareweb/Add-New.png" />
+                        Add more child items
+                    </a>
+                    <button type="button" class="btn btn-primary" ng-if="ChildItemTitle.length==1"
+                            ng-click="createChildItems('CreatePopup');" ng-disabled="ChildItemTitle[0].Title=='' ">
+                        Create & Open Popup
+                    </button>
+                    <button type="button" class="btn btn-primary" ng-click="createChildItems(ParentItem[0].Id);"
+                            ng-disabled="ChildItemTitle[0].Title=='' ">
+                        Create
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

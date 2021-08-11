@@ -1,0 +1,434 @@
+﻿<script src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/js/angular/HomePage/DefaultPageTest.js"></script>
+<style>
+    .required-asterisk {
+        color: red;
+        font-weight: bold;
+        margin-left: 3px;
+        font-size: 1.2em;
+    }
+</style>
+<div ng-controller="HomeContentControllerTest" ng-cloak>
+    <section id="slider" class="slider-element min-vh-100 dark include-header">
+        <div ng-repeat="obj in HomeArray">
+            <div class="slider-inner"
+                 style="background-image: url({{obj.Item_x0020_Cover}});background-position: 50% 0;">
+                <div class="container">
+                    <div class="slider-caption slider-caption-center">
+                        <h2 data-animate="fadeInDown">
+                            {{obj.Title}}<a ng-if="isOwner" class="hreflink" ng-click="EditItem(obj)">
+                                <img class="edit-svg"
+                                     ng-src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/hhh/images/edit.svg">
+                            </a>
+                        </h2>
+                        <p class="d-none d-sm-block" data-animate="fadeInUp" data-delay="0"
+                           ng-bind-html="obj.Description | trustedHTML"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Page Sub Menu
+            ============================================= -->
+    <div id="page-menu" class="dots-menu dots-menu-border">
+        <div id="page-menu-wrap">
+            <div class="container">
+                <div class="page-menu-row">
+
+                    <div class="page-menu-title">Explore <span>Foundation</span></div>
+
+                    <nav class="page-menu-nav">
+                        <ul class="page-menu-container one-page-menu" data-offset="0">
+                            <li class="page-menu-item">
+                                <a href="#" data-href="#header">
+                                    <div>Home</div>
+                                </a>
+                            </li>
+                            <li class="page-menu-item">
+                                <a href="#" data-href="#section-whoweare">
+                                    <div>Who we are</div>
+                                </a>
+                            </li>
+                            <li class="page-menu-item">
+                                <a href="#" data-href="#section-whatweoffer">
+                                    <div>What we offer</div>
+                                </a>
+                            </li>
+                            <li class="page-menu-item">
+                                <a href="#" data-href="#section-howwework">
+                                    <div>How we work</div>
+                                </a>
+                            </li>
+                            <li class="page-menu-item">
+                                <a href="#" data-href="#section-contact">
+                                    <div>Contact</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <div id="page-menu-trigger"><i class="icon-reorder"></i></div>
+
+                </div>
+            </div>
+        </div>
+    </div><!-- #page-menu end -->
+
+    <section id="content" style="overflow: visible;">
+
+
+        <!-- Wave Shape Divider
+        ============================================= -->
+        <div class="wave-bottom"
+             style="position: absolute; top: -12px; left: 0; width: 100%; background-image: url('https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/hhh/images/wave2.svg'); height: 12px; z-index: 2; background-repeat: repeat-x; transform: rotate(180deg);">
+        </div>
+
+
+        <div class="content-wrap py-0">
+            <div class="promo promo-light promo-full p-5">
+                <div class="container clearfix">
+                    <div class="row align-items-center">
+                        <div class="col-12 col-lg-8  text-right">
+                            <h1>We are <span>Hiring</span>. Join our team!</h1>
+                        </div>
+                        <div class="col-12 col-lg-4 mt-lg-0">
+                            <a href="https://hhhhteams.sharepoint.com/sites/HHHHTeams/sp/SitePages/Vacancies.aspx"
+                               class="button button-border button-rounded button-fill fill-from-right button-blue m-0">
+                                <span>
+                                    OPEN
+                                    POSITIONS
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <section id="section-whoweare" class="page-section section bg-transparent m-0">
+                <div class="container clearfix">
+                    <div ng-repeat="WhoWeAre in WhoWeAreArray">
+                        <div class="heading-block bottommargin-lg center">
+                            <h2>
+                                {{WhoWeAre.Title}}<a ng-if="isOwner" class="hreflink"
+                                                     ng-click="EditItem(WhoWeAre,'SubtitleHeader')">
+                                    <img class="edit-svg"
+                                         ng-src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/hhh/images/edit.svg">
+                                </a>
+                            </h2>
+                            <span ng-bind-html="WhoWeAre.ShortDescription | trustedHTML"></span>
+                        </div>
+                        <div class="row col-mb-50 mb-0">
+                            <div ng-if="WhoWeAre.childs.length >0" class="col-sm-6 col-lg-6"
+                                 ng-repeat="item in WhoWeAre.childs | orderBy: 'SortOrder'">
+                                <div class="heading-block fancy-title border-bottom-0 title-bottom-border">
+                                    <h4>
+                                        {{item.Title}}<a ng-if="isOwner" class="hreflink" ng-click="EditItem(item)">
+                                            <img class="edit-svg"
+                                                 ng-src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/hhh/images/edit.svg">
+                                        </a>
+                                    </h4>
+                                </div>
+                                <p ng-show="IsShowMore(item.Description)" ng-bind-html="item.Description | trustedHTML">
+                                </p>
+
+                                <p ng-show="IsShowMorenew(item.Description) && item.IsShowMore =='0'"
+                                   ng-bind-html="item.Description | trustedHTML"></p>
+
+                                <div ng-show="IsShowMorenew(item.Description) && item.IsShowMore =='1'"
+                                     data-readmore="true"
+                                     data-readmore-trigger-open="Read More <i class='icon-angle-down'></i>"
+                                     data-readmore-trigger-close="Read Less <i class='icon-angle-up'></i>">
+
+                                    <p class="mb-0" ng-bind-html="item.Description | trustedHTML"></p>
+                                    <a href="#"
+                                       class="button button-border button-sm button-rounded topmargin-sm ml-0 read-more-trigger"></a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="section-whatweoffer" class="page-section section m-0 border-0 overflow-hidden"
+                     style="background: #F9F9F9 url('https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/hhh/images/pattern-dark.png') repeat center center; padding: 80px 0">
+                <div class="vertical-middle">
+                    <div class="container clearfix">
+                        <div ng-repeat="WhatWeOffer in WhatWeOfferArray | orderBy: 'SortOrder'">
+                            <div class="heading-block center bottommargin-lg">
+                                <h2>
+                                    {{WhatWeOffer.Title}}<a ng-if="isOwner" class="hreflink"
+                                                            ng-click="EditItem(WhatWeOffer,'SubtitleHeader')">
+                                        <img class="edit-svg"
+                                             ng-src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/hhh/images/edit.svg">
+                                    </a>
+                                </h2>
+                                <span ng-bind-html="WhatWeOffer.ShortDescription | trustedHTML"></span>
+                            </div>
+
+                            <div class="row  col-mb-50">
+                                <div class="col-sm-6 col-lg-4"
+                                     ng-repeat="offer in WhatWeOffer.childs | orderBy: 'SortOrder'">
+                                    <div class="feature-box fbox-plain" data-animate="fadeIn">
+                                        <div class="fbox-icon">
+                                            <a><img class="icon-screen" ng-src="{{offer.Item_x0020_Cover}}"></a>
+                                            <!--<a href="#"><i class={{offer.ClassName}}></i></a>-->
+                                        </div>
+                                        <div class="fbox-content">
+                                            <h3>
+                                                <a target="_blank" class="hreflink"
+                                                   ng-href="https://hhhhteams.sharepoint.com/sites/HHHHTeams/sp/SitePages/Content-Profile.aspx?PageId={{offer.Id}}">
+                                                    {{offer.Title}}
+                                                </a><a ng-if="isOwner" class="hreflink"
+                                                       ng-click="EditItem(offer)">
+                                                    <img class="edit-svg"
+                                                         ng-src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/hhh/images/edit.svg">
+                                                </a>
+                                            </h3>
+                                            <p ng-show="IsShowMore(offer.Description)"
+                                               ng-bind-html="offer.Description | trustedHTML"></p>
+                                            <div ng-if="offer.IsShowMore =='0'">
+                                                <p ng-show="IsShowMorenew(offer.Description)"
+                                                   ng-bind-html="offer.Description | trustedHTML"></p>
+                                            </div>
+                                            <div ng-if="offer.IsShowMore =='1'">
+                                                <div id="txtIds" ng-show="IsShowMorenew(offer.Description)"
+                                                     data-readmore="true"
+                                                     data-readmore-trigger-open="Read More <i class='icon-angle-down' ></i>"
+                                                     data-readmore-trigger-close="Read Less <i class='icon-angle-up'></i> ">
+
+                                                    <p class="mb-0" ng-bind-html="offer.Description | trustedHTML"></p>
+                                                    <a href="#" ng-if="offer.IsShowMore =='1'"
+                                                       class="button button-border button-sm button-rounded topmargin-sm ml-0 read-more-trigger"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="section-howwework" class="page-section section bg-transparent m-0">
+                <div class="container clearfix">
+                    <div ng-repeat="HowWeWork in HowWeWorkArray| orderBy: 'SortOrder'">
+                        <div class="heading-block bottommargin-lg center">
+                            <h2>
+                                {{HowWeWork.Title}}
+                                <a ng-if="isOwner" class="hreflink" ng-click="EditItem(HowWeWork,'SubtitleHeader')">
+                                    <img class="edit-svg"
+                                         ng-src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/hhh/images/edit.svg">
+                                </a>
+                            </h2>
+                            <span ng-bind-html="HowWeWork.SubTitle | trustedHTML"></span>
+                        </div>
+
+                        <div class="container clearfix" ng-repeat="item in HowWeWork.childs">
+                            <div class="row bottommargin-lg  align-items-center">
+                                <div class="col-md-5 text-center"
+                                     ng-if="$index%2==0 && item.Item_x0020_Cover!=undefined">
+                                    <img class="howwework-imgshadow" ng-src="{{item.Item_x0020_Cover}}" alt="Image"
+                                         data-animate="fadeInLeft">
+                                </div>
+                                <div class="{{item.Item_x0020_Cover!=undefined?'col-md-7':'width-50'}}">
+                                    <div class="heading-block">
+                                        <h3>
+                                            {{item.Title}}<a ng-if="isOwner" class="hreflink" ng-click="EditItem(item)">
+                                                <img class="edit-svg"
+                                                     ng-src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/hhh/images/edit.svg">
+                                            </a>
+                                        </h3>
+                                    </div>
+                                    <p ng-show="IsShowMore(item.Description)"
+                                       ng-bind-html="item.Description | trustedHTML"></p>
+                                    <div ng-if="item.IsShowMore =='0'">
+                                        <p ng-show="IsShowMorenew(item.Description)"
+                                           ng-bind-html="item.Description | trustedHTML"></p>
+                                    </div>
+                                    <div ng-if="item.IsShowMore =='1'">
+                                        <div ng-show="IsShowMorenew(item.Description)" data-readmore="true"
+                                             data-readmore-trigger-open="Read More <i class='icon-angle-down'></i>"
+                                             data-readmore-trigger-close="Read Less <i class='icon-angle-up'></i>">
+                                            <p class="mb-0" ng-bind-html="item.Description | trustedHTML"></p>
+                                            <a href="#" ng-if="item.IsShowMore =='1'"
+                                               class="button button-border button-sm button-rounded topmargin-sm ml-0 read-more-trigger"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 text-center" ng-if="$index%2!=0">
+                                    <img class="howwework-imgshadow" ng-src="{{item.Item_x0020_Cover}}" alt="Image"
+                                         data-animate="fadeInRight">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div id="section-contact" class="page-section section m-0 bg-color"
+                 style="padding: 80px 0 60px 0; background-image: linear-gradient(to bottom, #3D80E4 0%, #0a4bab 80%, #FFF 80%);">
+                <div class="container clearfix">
+                    <div class="row mx-auto dotted-bg" style="max-width: 740px">
+                        <div class="col-md-12">
+                            <div class="center dark mb-5">
+                                <!-- <i class="icon-line-help h1 "></i> -->
+                                <h2 class="font-weight-bold mb-2">Contact</h2>
+                                <p>
+                                    You have an interesting project in mind, want to enquire about our services or simply
+                                    want to say hi? We always welcome your outreach! Simply fill out the form below or
+                                    send us a mail to info@hochhuth-consulting.de
+                                </p>
+                            </div>
+
+                            <div class="card bg-white shadow-lg border-0">
+                                <div class="card-body p-5">
+                                    <div class="form-widget" data-loader="button" data-alert-type="inline">
+
+                                        <div class="form-result"></div>
+
+                                        <ng-form class="row mb-0" id="form-enquiry" action="" method="post">
+                                            <div class="form-process"></div>
+                                            <div class="col-12 form-group mb-4">
+                                                <label>Name:</label>
+                                                <input type="text" name="form-enquiry-name"
+                                                       class="form-control form-control-lg required" ng-model="UserName">
+
+                                            </div>
+                                            <div class="col-12 form-group mb-4">
+                                                <label>Email:</label>
+                                                <input type="email" name="form-enquiry-email"
+                                                       class="form-control form-control-lg required" ng-model="UserEmail" />
+
+                                            </div>
+                                            <div class="col-12 form-group mb-4">
+                                                <label>Contact:</label>
+                                                <input type="tel" name="form-enquiry-email"
+                                                       class="form-control form-control-lg required" ng-model="UserContact" />
+                                            </div>
+                                            <div class="col-12 form-group mb-4">
+                                                <label>Message:</label>
+                                                <textarea name="form-enquiry-additional-requirements"
+                                                          class="form-control form-control-lg" cols="30" rows="5"
+                                                          ng-model="UserQuery"
+                                                          placeholder="Please let us know how we can help you..."></textarea>
+                                            </div>
+                                            <div class="col-12 form-group mb-4">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="gridCheck"
+                                                           ng-model="checkboxvalue">
+                                                    <label class="form-check-label" for="gridCheck">
+                                                        <span class="terms-font">
+                                                            I have read the Privacy Policy note. I
+                                                            agree that my contact details and questions will be stored
+                                                            permanently.
+                                                        </span>
+                                                        <span class="required-asterisk">*</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12  form-group ">
+
+                                                <button type="button" name="landing-enquiry-submit"
+                                                        ng-disabled="!checkboxvalue || !UserName"
+                                                        class="btn btn-block text-white bg-color rounded-lg py-3 font-weight-semibold text-uppercase mt-2"
+                                                        ng-click="AddUserQuery()">
+                                                    SEND MESSAGE
+                                                </button>
+                                            </div>
+
+                                            <input type="hidden" name="prefix" value="Send Message">
+                                        </ng-form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Large modal -->
+    <!-- The Modal -->
+    <div id="myModall" class="mymodal">
+        <!-- Modal content -->
+        <div class="mymodal-content">
+            <div class="mymodal-header">
+                <button type="button" class="close" data-dismiss="modal" ng-click="cancelHomePagePopup()"
+                        style="min-width: 10px;">
+                    &times;
+                </button>
+                <hhhh-Page-settings-info webpartid="'EditContentPopup'"></hhhh-Page-settings-info>
+                <h3 class="modal-title">
+                    Edit item
+                </h3>
+            </div>
+            <div class="mymodal-body">
+                <div class="tab-content bdrbox my-3 py-2">
+
+                    <div ng-show="Item.SubTitle==undefined" class="row ml-1">
+                        <div class="col-sm-8 ">
+                            <label class="text-capitalize">Title</label>
+                            <input type="text" autocomplete="off" class="form-control" ng-model="Item.Title" />
+                        </div>
+                        <div class="col-sm-2 ">
+                            <label class="text-capitalize">Sort Order</label>
+                            <input type="text" autocomplete="off" class="form-control" ng-model="Item.SortOrder" />
+                        </div>
+                        <div class="col-sm-2  mt-4">
+                            <input type="checkbox" ng-model="Item.select" style="cursor: pointer;">
+                            <label style="cursor: auto;" class="text-capitalize">Read More</label>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 my-2" ng-show="Item.SubTitle!=undefined">
+                        <label class="text-capitalize">Title</label>
+                        <input type="text" autocomplete="off" class="form-control" ng-model="Item.Title" />
+                    </div>
+
+
+                    <div class="col-sm-12 my-2">
+                        <label class="text-capitalize">Description</label>
+
+                        <div id="AddDescription" style="z-index: 1;"></div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="col-sm-12 d-flex pl-0 pr-0">
+                    <div class="col-sm-6 pl-0">
+                        <div class="col-sm-12">
+                            Created <span>{{Item.Created}}</span> by<a>
+                                <span class="footerUsercolor">{{Item.Author}}</span>
+                            </a>
+                        </div>
+                        <div class="col-sm-12">
+                            Last modified <span>{{Item.Modified}}</span> by<a>
+                                <span class="footerUsercolor">{{Item.Editor}}</span>
+                            </a>
+                        </div>
+                        <div class="col-sm-12">
+                            <a ng-if="isOwner==true" style="cursor:pointer" ng-click="DeleteItem(Item);"
+                               class="ng-scope"><img src="/_layouts/images/delete.gif"> Delete this item</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 text-right pr-0">
+                        <a ng-href="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Lists/Home%20Content/EditForm.aspx?ID={{Item.Id}}"
+                           target="_blank">Open out-of-the-box form</a>
+                        <button type="button" class="btn btn-primary" ng-click="saveHomePagePopup(Item)">Save</button>
+                        <!--ng-disabled="projectForm.$error.required || projectForm.$error.pattern"-->
+                        <button type="button" class="btn btn-default btn-outline"
+                                ng-click="cancelHomePagePopup()">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+                <!--<div class="mymodal-footer">
+                    <h3>Modal Footer</h3>
+                </div>-->
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>

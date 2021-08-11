@@ -1,0 +1,650 @@
+﻿<script src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/js/angular/Services/main.js"></script>
+<script src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/_layouts/15/sp.RequestExecutor.js"></script>
+<link type="text/css" rel="stylesheet" href="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/css/foundation.css" />
+<link rel="stylesheet" type="text/css"
+    href="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/js/angular/Services/font-awesome.min.css" />
+<script type="text/javascript"
+    src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/js/angular/Services/froala_editor.pkgd.min.js"></script>
+<link rel="stylesheet" type="text/css"
+    href="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/js/angular/Services/froala_style.min.css" />
+<link rel="stylesheet" type="text/css"
+    href="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/js/angular/Services/froala_editor.pkgd.min.css" />
+<script src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/js/angular/HomePage/HomePageSearch.js"></script>
+<script src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/js/angular/Templates/HomePageSearchpopup.js"></script>
+<style>
+    #RestructuringPopup .close,#CreateChildpoup .close{color: #000;}
+</style>
+
+
+<section id="content">
+    <div id="content-wrap">
+        <div class="container clearfix">
+            <div class="component componet-portfoliblue" ng-controller="HomePageSearchController">
+                <div class="homepage-contentsize">
+                    <h1 class="blue-clr">HomePageSearch </h1>
+                    <div class="" ng-cloak>
+                        <div class="panel-body">
+                            <div class="row mb-3">
+                                <div class="col-sm-2 pr-0">
+                                    <label class="t-tranformation">Search in all items:</label>
+                                </div>
+                                <div class="col-sm-4 px-0">
+                                    <input id="searchinput" type="text" ng-model="searchGlobal"
+                                        placeholder="Search all..." class="form-control searchbox_height">
+                                    <span ng-show="searchGlobal.length>0" class="searchclear"
+                                        ng-click="clearControl('searchinput')">X</span>
+                                </div>
+                                <div class="col-sm-2 pr-0 mt-1">
+                                    <label class="t-tranformation"> <span
+                                            ng-bind-html="GetColumnDetails('Showing') | trustedHTML"> </span>
+                                        {{filteredLength}} </label>
+                                    <label class="t-tranformation"> <span
+                                            ng-bind-html="GetColumnDetails('Of') | trustedHTML"> </span>
+                                        {{Allcountitems.length}} </label>
+                                    <label class="t-tranformation">Items</label>
+                                </div>
+                                <div class="col-sm-1 pl-0 mt-1"> <a data-ng-click="ClearFilters()"
+                                        class="hreflink "><label class="t-tranformation"
+                                            ng-bind-html="GetColumnDetails('ClearAll') | trustedHTML"></label> <img
+                                            class="deleteicon" ng-src="/_layouts/images/delete.gif"></a> </div>
+                                <div class="col-sm-3 text-right">
+                                    <button type="button" class="btn btn-primary"
+                                        ng-disabled="addContentMangagement.length!=1"
+                                        ng-click="openContentManagementPopup()">Add Item</button>
+                                    <button type="button" class="btn btn-primary"
+                                        ng-disabled="SelectedHomePageItem.length==0"
+                                        ng-click="openRestructure()">Restructure</button>
+                                </div>
+                            </div>
+                            <div id="table-wrapper" class="section-event pt-0">
+                                <ul id="documents" class="table table-fixed table-hover" width="100%">
+                                    <li class="for-lis">
+                                        <div style="width:2%;" class="">
+                                            <div style="width:100%;">
+                                                <a class="hreflink" ng-show="!expand_collapse"
+                                                    ng-click="filterExpanded(MainHomeDataCollection)"
+                                                    title="Tap to expand the childs">
+                                                    <img style="width: 10px;"
+                                                        src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/SiteCollectionImages/ICONS/24/right-list-icon.png">
+                                                </a>
+                                                <a class="hreflink" ng-show="expand_collapse"
+                                                    ng-click="filterCollapsed(MainHomeDataCollection)"
+                                                    title="Tap to Shrink the childs">
+                                                    <img style="width: 10px;"
+                                                        src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/SiteCollectionImages/ICONS/24/list-icon.png">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div style="width:3%;" class="display_hide">
+                                            <div style="width:3%;"></div>
+                                        </div>
+                                        <div style="width:40%;" class="display_hide">
+                                            <div style="width:17%;" class="displayLabel">
+                                                <label>Title</label>
+                                            </div>
+                                            <div style="width:100%" class="headcontainer p-relative">
+                                                <input type="text" id="searchName" placeholder="Title"
+                                                    class="width-90 searchbox_height" ng-model="searchTitle" />
+                                                <span ng-show="searchTitle.length>0" class="searchclear tablecross"
+                                                    ng-click="clearControl('searchTitle')">X</span>
+                                                <i class="{{orderBy=='Title'&&!reverse?'iconangleup_active':'icon-angle-up1'}}  icon-angle-up1 top3 "
+                                                    ng-click="sortBy('Title', false)"></i>
+                                                <i class="{{orderBy=='Title'&&reverse?'iconangleup_active':'icon-angle-down1'}} icon-angle-down1 top9"
+                                                    ng-click="sortBy('Title', true)"></i>
+                                                <!-- <span class="{{orderBy=='Title'&&!reverse?'glyphicon_active':'glyphicon'}}  glyphicon-chevron-up direction-arrow arrow_up" ng-click="sortBy('Title', false)"></span>
+                                                <span class="{{orderBy=='Title'&&reverse?'glyphicon_active':'glyphicon'}}  glyphicon-chevron-down direction-arrow arrow_down" ng-click="sortBy('Title', true)"></span> -->
+                                            </div>
+                                        </div>
+                                        <div style="width:30%;" class="display_hide">
+                                            <div style="width:17%;" class="displayLabel">
+                                                <!--<label>Template</label>-->
+                                            </div>
+                                            <div style="width:100%" class="headcontainer p-relative">
+                                                <input type="text" id="searchDesignTemplate" placeholder="Template"
+                                                    class="width-90 searchbox_height mr-1"
+                                                    ng-model="searchDesignTemplate" />
+                                                <span ng-show="searchDesignTemplate.length>0"
+                                                    class="searchclear tablecross"
+                                                    ng-click="clearControl('searchDesignTemplate')">X</span>
+                                                <!--<span class="{{orderBy=='DesignTemplate'&&!reverse?'glyphicon_active':'glyphicon'}}  glyphicon-chevron-up direction-arrow arrow_up"
+                                                      ng-click="sortBy('DesignTemplate', false)"></span>
+                                                <span class="{{orderBy=='DesignTemplate'&&reverse?'glyphicon_active':'glyphicon'}}  glyphicon-chevron-down direction-arrow arrow_down"
+                                                      ng-click="sortBy('DesignTemplate', true)"></span>-->
+
+                                                <i class="{{orderBy=='DesignTemplate'&&!reverse?'iconangleup_active':'icon-angle-up1'}}  icon-angle-up1 top3 "
+                                                    ng-click="sortBy('DesignTemplate', false)"></i>
+                                                <i class="{{orderBy=='DesignTemplate'&&reverse?'iconangleup_active':'icon-angle-down1'}} icon-angle-down1 top9"
+                                                    ng-click="sortBy('DesignTemplate', true)"></i>
+                                            </div>
+                                        </div>
+                                        <div style="width:30%;" class="display_hide">
+                                            <div style="width:17%;" class="displayLabel">
+                                                <!--<label>SortOrder</label>-->
+                                            </div>
+                                            <div style="width:100%" class="headcontainer p-relative">
+                                                <input type="text" id="searchSortOrder" placeholder="SortOrder"
+                                                    class="width-90 searchbox_height mr-1" ng-model="searchSortOrder" />
+                                                <span ng-show="searchSortOrder.length>0" class="searchclear tablecross"
+                                                    ng-click="clearControl('searchSortOrder')">X</span>
+                                                <i class="{{orderBy=='SortOrder'&&!reverse?'iconangleup_active':'icon-angle-up1'}}  icon-angle-up1 top3 "
+                                                    ng-click="sortBy('SortOrder', false)"></i>
+                                                <i class="{{orderBy=='SortOrder'&&reverse?'iconangleup_active':'icon-angle-down1'}} icon-angle-down1 top9"
+                                                    ng-click="sortBy('SortOrder', true)"></i>
+                                                <!--<span class="{{orderBy=='SortOrder'&&!reverse?'glyphicon_active':'glyphicon'}}  glyphicon-chevron-up direction-arrow arrow_up"
+                                                      ng-click="sortBy('SortOrder', false)"></span>
+                                                <span class="{{orderBy=='SortOrder'&&reverse?'glyphicon_active':'glyphicon'}}  glyphicon-chevron-down direction-arrow arrow_down"
+                                                      ng-click="sortBy('SortOrder', true)"></span>-->
+
+                                            </div>
+                                        </div>
+
+                                        <!--<div style="width:57%;" class="display_hide">
+                                            <div style="width:17%;" class="displayLabel">
+                                                <label>Description</label>
+                                            </div>
+                                            <div style="width:100%;" class="headcontainer p-relative">
+                                                <input type="text" id="searchModifieddate " placeholder="Description" class="width-93 searchbox_height" ng-model="searchDescription" />
+                                                <span ng-show="searchDescription.length>0" class="searchclear tablecross" ng-click="clearControl('searchDescription')">X</span>
+                                                <i class="icon-angle-up1 top3" ng-click="sortBy('Description', false)"></i>
+                                                <i class="icon-angle-down1 top9" ng-click="sortBy('Description', true)"></i>
+                                                 <span class="{{orderBy=='Description'&&!reverse?'glyphicon_active':'glyphicon'}}  glyphicon-chevron-up direction-arrow arrow_up" ng-click="sortBy('Description', false)"></span>
+                                                <span class="{{orderBy=='Description'&&reverse?'glyphicon_active':'glyphicon'}}  glyphicon-chevron-down direction-arrow arrow_down" ng-click="sortBy('Description', true)"></span>
+                                            </div>
+                                        </div>-->
+                                        <div style="width:3%;" class="display_hide">
+                                            <div style="width:3%;"></div>
+                                        </div>
+                                        <div style="width:2%;" class="display_hide">
+                                            <div style="width:3%;"></div>
+                                        </div>
+                                        <div style="width:2%;" class="display_hide">
+                                            <div style="width:3%;"></div>
+                                        </div>
+                                    </li>
+                                    <div class="scroll-8">
+                                        <li ng-show="item.flag==true"
+                                            class="for-lis bold f-14 project_active tdrows serviceColor_Active"
+                                            ng-repeat-start="item in filterComponent=(MainHomeDataCollection|orderBy:orderBy:reverse)"
+                                            lvl-drop-target="true" on-drop="dropped(dragSrc,item)">
+                                            <div style="width:2%;" class="">
+                                                <a class="hreflink" ng-show="item.childs.length>0&&!item.expanded"
+                                                    ng-click="item.expanded=true" title="Expand {{item.Title}} childs">
+                                                    <img
+                                                        src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/SiteCollectionImages/ICONS/24/right-list-icon.png">
+                                                </a>
+                                                <a class="hreflink" ng-show="item.childs.length>0&&item.expanded"
+                                                    ng-click="item.expanded=false"
+                                                    title="Collapse {{item.Title}} childs">
+                                                    <img
+                                                        src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/SiteCollectionImages/ICONS/24/list-icon.png">
+                                                </a>
+                                            </div>
+                                            <div style="width:3%;" class="padLR">
+                                                <div>
+                                                    <input type="checkbox"
+                                                        ng-click="selectDeeselectItems(item,item.select,item);"
+                                                        ng-model="item.select">
+                                                </div>
+                                            </div>
+                                            <div style="width:40%;" class="padLR pl-0">
+                                                <span ng-bind-html="item.Title | trustedHTML">
+                                                    <span ng-show="item.Description!=null" class="info-tooltip">
+                                                        <i class="icon-info-circle"></i>
+                                                        <div class="tooltiphover">
+                                                            <div class="tooltipheader">{{item.Title}}</div>
+                                                            <div class="tooltipdescription"
+                                                                ng-bind-html="item.Description | trustedHTML">
+                                                            </div>
+                                                        </div>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            <div style="width:30%;" class="padLR pl-0">
+                                                {{item.DesignTemplate}}
+                                            </div>
+                                            <div style="width:30%;" class="padLR pl-0">
+                                                <span ng-show="item.SortOrder!=0">{{item.SortOrder}}</span>
+
+                                            </div>
+                                            <!--<div style="width:56%;" class="padLR">
+                                                <span ng-bind-html="item.Description | trustedHTML">
+                                                </span>
+                                            </div>-->
+                                            <div style="width:4%;" class="padLR">
+                                                <a class="hreflink" title="Restructuring Tool" data-toggle="modal"
+                                                    ng-show="item.isRestructureActive" target="_blank"
+                                                    ng-click="openRestructuringPopup(item)">
+                                                    <img class="icon-sites-img"
+                                                        src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/SiteCollectionImages/ICONS/Shareweb/Restructuring_Tool.png">
+                                                </a>
+                                            </div>
+                                            <div style="width:2%;" class="icontype display_hide">
+                                                <a class="hreflink" ng-click="EditItem(item,'SubtitleHeader')">
+                                                    <img
+                                                        ng-src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/_layouts/images/edititem.gif">
+                                                </a>
+
+                                            </div>
+                                            <div style="width: 1%;"></div>
+                                        </li>
+                                        <li ng-if="item.expanded" class="active" ng-repeat-end>
+                                            <ul class="table">
+                                                <li ng-show="item.childs.length >0 && child.flag ==true "
+                                                    ng-repeat-start="child in filterComponent=(item.childs|orderBy:orderBy:reverse)"
+                                                    class="for-lis f-14 tdrows">
+                                                    <div style="width:2%;" class="">
+                                                        <a class="hreflink"
+                                                            ng-show="child.childs.length>0&&!child.expanded"
+                                                            ng-click="child.expanded=true"
+                                                            title="Expand {{child.Title}} childs">
+                                                            <img
+                                                                src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/SiteCollectionImages/ICONS/24/right-list-icon.png">
+                                                        </a>
+                                                        <a class="hreflink"
+                                                            ng-show="child.childs.length>0&&child.expanded"
+                                                            ng-click="child.expanded=false"
+                                                            title="Collapse {{child.Title}} childs">
+                                                            <img
+                                                                src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/SiteCollectionImages/ICONS/24/list-icon.png">
+                                                        </a>
+                                                    </div>
+                                                    <div style="width:3%;" class="padLR">
+                                                        <div>
+                                                            <input type="checkbox"
+                                                                ng-click="setSelectHomePageItems(child,'');"
+                                                                ng-model="child.select">
+                                                        </div>
+                                                    </div>
+                                                    <div style="width:40%;" class="padLR">
+                                                        <span ng-bind-html="child.Title | trustedHTML">
+                                                            <span ng-show="child.Description!=null"
+                                                                class="info-tooltip">
+                                                                <i class="icon-info-circle"></i>
+                                                                <div class="tooltiphover">
+                                                                    <div class="tooltipheader">{{child.Title}}</div>
+                                                                    <div class="tooltipdescription"
+                                                                        ng-bind-html="child.Description | trustedHTML">
+                                                                    </div>
+                                                                </div>
+                                                            </span>
+
+                                                        </span>
+                                                    </div>
+                                                    <div style="width:30%;" class="padLR">
+                                                        {{child.DesignTemplate}}
+                                                    </div>
+                                                    <div style="width:30%;" class="padLR">
+                                                        <span ng-show="child.SortOrder!=0"> {{child.SortOrder}}</span>
+                                                    </div>
+                                                    <!--<div style="width:57%;" class="padLR pl-3">
+                                                        <span class="tablehomepage" ng-bind-html="child.Description | trustedHTML">
+
+                                                        </span>
+                                                    </div>-->
+                                                    <div style="width:3%;" class="padLR">
+                                                        <a class="hreflink" title="Restructuring Tool"
+                                                            data-toggle="modal" ng-show="child.isRestructureActive"
+                                                            target="_blank" ng-click="openRestructuringPopup(child)">
+                                                            <img class="icon-sites-img"
+                                                                src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/SiteCollectionImages/ICONS/Shareweb/Restructuring_Tool.png">
+                                                        </a>
+                                                    </div>
+                                                    <div style="width:2%;" class="icontype display_hide text-right">
+                                                        <a class="hreflink" ng-click="EditItem(child)">
+                                                            <img
+                                                                ng-src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/_layouts/images/edititem.gif">
+                                                        </a>
+                                                    </div>
+                                                    <div class="icontype display_hide padLR" style="width:2%;"><a
+                                                            class="hreflink" title="Delete"> <img
+                                                                data-ng-click="removeItem(child)"
+                                                                ng-src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/_layouts/images/delete.gif">
+                                                        </a></div>
+                                                </li>
+                                                <li ng-if="child.expanded" class="active" ng-repeat-end>
+                                                    <ul class="table">
+                                                        <li ng-show="child.childs.length >0 && subchild.flag ==true "
+                                                            ng-repeat="subchild in filterComponent=(child.childs|orderBy:orderBy:reverse)"
+                                                            class="for-lis f-14 tdrows">
+                                                            <div style="width:2%;" class="">
+                                                                <a class="hreflink"
+                                                                    ng-show="subchild.childs.length>0&&!subchild.expanded"
+                                                                    ng-click="subchild.expanded=true"
+                                                                    title="Expand {{subchild.Title}} childs">
+                                                                    <img
+                                                                        src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/SiteCollectionImages/ICONS/24/right-list-icon.png">
+                                                                </a>
+                                                                <a class="hreflink"
+                                                                    ng-show="subchild.childs.length>0&&subchild.expanded"
+                                                                    ng-click="subchild.expanded=false"
+                                                                    title="Collapse {{subchild.Title}} childs">
+                                                                    <img
+                                                                        src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/SiteCollectionImages/ICONS/24/list-icon.png">
+                                                                </a>
+                                                            </div>
+                                                            <div style="width:3%;" class="padLR">
+                                                                <div>
+                                                                    <input type="checkbox"
+                                                                        ng-click="setSelectHomePageItems(subchild,'isLastLevel');"
+                                                                        ng-model="subchild.select">
+                                                                </div>
+                                                            </div>
+                                                            <div style="width:40%;" class="padLR">
+                                                                <span ng-bind-html="subchild.Title | trustedHTML">
+                                                                    <span ng-show="subchild.Description!=null"
+                                                                        class="info-tooltip">
+                                                                        <i class="icon-info-circle"></i>
+                                                                        <div class="tooltiphover">
+                                                                            <div class="tooltipheader">
+                                                                                {{subchild.Title}}</div>
+                                                                            <div class="tooltipdescription"
+                                                                                ng-bind-html="subchild.Description | trustedHTML">
+                                                                            </div>
+                                                                        </div>
+                                                                    </span>
+                                                                </span>
+                                                            </div>
+                                                            <div style="width:30%;" class="padLR">
+                                                                {{subchild.DesignTemplate}}
+                                                            </div>
+                                                            <div style="width:30%;" class="padLR">
+                                                                <span ng-show="subchild.SortOrder!=0">
+                                                                    {{subchild.SortOrder}}</span>
+
+                                                            </div>
+                                                            <!--<div style="width:57%;" class="padLR pl-3">
+                                                                <span class="tablehomepage" ng-bind-html="subchild.Description | trustedHTML">
+
+                                                                </span>
+                                                            </div>-->
+                                                            <div style="width:3%;" class="padLR">
+                                                                <a class="hreflink" title="Restructuring Tool"
+                                                                    data-toggle="modal"
+                                                                    ng-show="subchild.isRestructureActive"
+                                                                    target="_blank"
+                                                                    ng-click="openRestructuringPopup(subchild)">
+                                                                    <img class="icon-sites-img"
+                                                                        src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/SiteCollectionImages/ICONS/Shareweb/Restructuring_Tool.png">
+                                                                </a>
+                                                            </div>
+                                                            <div style="width:2%;"
+                                                                class="icontype display_hide text-right">
+                                                                <a class="hreflink" ng-click="EditItem(subchild)">
+                                                                    <img
+                                                                        ng-src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/_layouts/images/edititem.gif">
+                                                                </a>
+                                                            </div>
+                                                            <div class="icontype display_hide padLR" style="width:2%;">
+                                                                <a class="hreflink" title="Delete"> <img
+                                                                        data-ng-click="removeItem(subchild)"
+                                                                        ng-src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/_layouts/images/delete.gif">
+                                                                </a></div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="AddHomeContentItem" class="modal fade in" tabindex="-1" role="dialog"
+                    aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+                    <div class="modal-dialog">
+                        <div class="panel panel-default">
+                            <div class="panel-title">
+                                <button type="button" class="close" data-dismiss="modal"
+                                    ng-click="cancelHomePagePopup()" style="min-width: 10px;">
+                                    &times;
+                                </button>
+                                <h3 class="modal-title">
+                                    Add item
+                                </h3>
+                            </div>
+                            <div class="modal-body ">
+                                <div class="col-sm-12 tab-content bdrbox mb-10">
+                                    <div class="col-sm-4 padL-0 PadR0 form-group">
+                                        <label>Title</label>
+                                        <input type="text" autocomplete="off" class="form-control"
+                                            ng-model="AddTitle" />
+                                    </div>
+                                    <div class="col-sm-4 PadR0  form-group">
+                                        <label>SortOrder</label>
+                                        <input type="text" autocomplete="off" id="AdditionalNewDatePicker"
+                                            class="form-control" ng-model="AddSortorder" />
+                                    </div>
+                                    <div class="col-sm-4 PadR0  form-group">
+                                        <label>SmartMainMenu</label>
+                                        <select class="form-control" id="ItemRankType" ng-model="AddSmartMainMenu">
+                                            <option value="">Select</option>
+                                            <option ng-repeat="item in HomeSmartMainMenu" value="{{item.Title}}">
+                                                {{item.Title}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12 padL-0 mb-10 PadR0">
+                                        <label>Description</label>
+                                        <div id="AddHomeDescription"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer pr-5 ">
+                                <button type="button" class="btn btn-primary" ng-click="saveHomePagePopup()">
+                                    Save
+                                </button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal"
+                                    ng-click="cancelHomePagePopup()">Cancel</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div id="RestructuringPopup" class="modal fade in" tabindex="-1" role="dialog"
+                    aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="panel-title">
+                                <button type="button" class="close" data-dismiss="modal"
+                                    ng-click="cancelopenCreateItem('RestructuringPopup')" style="min-width: 10px;">
+                                    &times;
+                                </button>
+
+                                <h3 class="my-1">
+                                    Restructuring Tool
+                                    <span class="pull-right NMt-7">
+                                        <page-settings-info webpartid="'sharewebRestructuringToolPopup'">
+                                        </page-settings-info>
+                                    </span>
+                                </h3>
+                            </div>
+                            <div class="modal-body">
+                                <div class="col-sm-12 tab-content bdrbox">
+                                    <div class="divPanelBody  mb-10  col-sm-12 padL-0 PadR0">
+                                        <div class="col-sm-12 padL-0 mt-10">
+                                            <div class="col-sm-12  pl-1 mt-1" ng-repeat="item in SelectedDataItem">
+                                                <a class="font_bold_size">
+                                                    <span ng-show="item.Parent!=undefined">
+                                                        <input style="margin-top:-4px!important" type="checkbox"
+                                                            ng-click="selectdeselectItems(item);" ng-model="item.select"
+                                                            value="" name="chkResSelected" />
+                                                        <b class="" style="color:#333333;">Old: </b>
+                                                        {{item.Parent.Title}} <span
+                                                            ng-show="item.Parent.Title!=undefined"> > </span>
+                                                    </span>
+                                                </a>
+                                                <a class="font_bold_size">
+                                                    <span ng-show="item.Title!=undefined">
+                                                        {{item.Title}}
+                                                    </span>
+                                                </a>
+                                                <div class="col-sm-12  PadR0 mt-1">
+                                                    <b class="">New: </b>
+                                                    <a class="font_bold_size">
+                                                        <span ng-show="parentRestructuring!=undefined">
+                                                            {{parentRestructuring.Title}} >
+                                                        </span>
+                                                    </a>
+                                                    <span class="" ng-repeat="Childitem in SelectedDataItem">
+                                                        <a>
+                                                            <span ng-bind-html="Childitem.Title"></span>
+                                                        </a>
+                                                    </span>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" ng-click="saveRestructuringData()"
+                                    ng-disabled="SelectedHomePageItem.length==0">Submit</button>
+                                <button type="button" class="btn btn-default"
+                                    ng-click="cancelopenCreateItem('RestructuringPopup')">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="CreateChildpoup" class="modal fade in" tabindex="-1" role="dialog"
+                    aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+                    <div class="modal-dialog ">
+                        <div class="modal-content">
+                            <div class="panel-title">
+                                <button type="button" style="min-width:10px;" class="close"
+                                    ng-click="cancelopenCreateItem('CreateChildpoup');">
+                                    &times;
+                                </button>
+                                <span>
+                                    <page-settings-info webpartid="'sharewebCreateChildItemPopup'"></page-settings-info>
+                                </span>
+                                <h3 class="my-1">
+                                    <a class="">
+                                        {{createChildItem.Title}}
+                                    </a>- Create Child Item
+
+                                </h3>
+                            </div>
+                            <div class="modal-body">
+                                <div class="col-sm-12 tab-content bdrbox">
+                                    <div class="col-sm-12">
+                                        <div class="col-sm-12  padL-0 PadR0" ng-repeat="item in ChildItemTitle">
+                                            <label class="col-sm-12 padL-0 text-capitalize">Title</label>
+
+                                            <div class="row">
+                                                <div class="col-sm-11">
+                                                    <input class="form-control full_width mb-10" type="text"
+                                                        ng-model="item.Title" placeholder="Enter Child Item Title"
+                                                        ng-required="true">
+                                                </div>
+
+                                                <div class="col-sm-1 padL-0">
+                                                    <a ng-show="ChildItemTitle.length>1 && $index!=0 "
+                                                        style="cursor:pointer;" title="Delete" data-toggle="modal"
+                                                        ng-click="RemoveFeedbackColumn(ChildItemTitle,$index,'')">
+                                                        <img class="" ng-src="/_layouts/images/delete.gif">
+                                                    </a>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <div ng-repeat-end></div>
+                                        <div class="clearfix">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <a class="hreflink mr-auto posleft blue-clr" ng-click="addNewTextField()">
+                                    <img class="icon-sites-img"
+                                        ng-src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/SiteCollectionImages/ICONS/Shareweb/Add-New.png" />
+                                    Add more child items
+                                </a>
+                                <button type="button" class="btn btn-primary" ng-if="ChildItemTitle.length==1"
+                                    ng-click="createChildItems('CreatePopup');"
+                                    ng-disabled="ChildItemTitle[0].Title=='' ">
+                                    Create & Open Popup
+                                </button>
+                                <button type="button" class="btn btn-primary" ng-click="createChildItems('Create');"
+                                    ng-disabled="ChildItemTitle[0].Title=='' ">
+                                    Create
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="SelectionData" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                    aria-hidden="false" style="display: none;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="panel-title">
+                                <button type="button" class="close mt-5" data-dismiss="modal"
+                                    ng-click="cancelopenCreateItem('SelectionData')"
+                                    style="min-width: 10px; margin-left: 10px;">
+                                    &times;
+                                </button>
+
+                                <h3>
+                                    Selected Items
+                                    <span class="pull-right">
+                                        <page-settings-info webpartid="'sharewebSelectedItemsPopup'">
+                                        </page-settings-info>
+                                    </span>
+                                </h3>
+                            </div>
+                            <div class="modal-body ">
+                                <div class="col-sm-12 padL-0 PadR0">
+                                    <div class="col-sm-12 padL-0 PadR0 tab-content bdrbox">
+                                        <div class="divPanelBody mt-10 mb-10  col-sm-12">
+                                            <div id="portfolio" class="section-event pt-0">
+                                                <ul class="table">
+                                                    <li class="for-lis">
+                                                        <span ng-show="isCreatePopup">
+                                                            <span class="large-bold"
+                                                                ng-bind-html="GetColumnDetails('Add Button') | trustedHTML">
+                                                            </span>
+                                                        </span>
+
+
+                                                    </li>
+                                                    <li class="for-lis  tdrows"
+                                                        ng-repeat="item in SelectedDataItem track by $index"
+                                                        lvl-drop-target="true" on-drop="dropped(dragSrc,item)">
+                                                        <div style="width:6%;" class="padLR">
+                                                            <input type="checkbox"
+                                                                ng-click="selectDeeselectItems(item);"
+                                                                ng-model="item.select" value="" name="chkSelected" />
+                                                        </div>
+
+                                                        <div style="width:45%;" class="padLR">
+                                                            <span>
+                                                                <a class="hreflink" ng-bind-html="item.Title">
+                                                                </a>
+                                                            </span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button ng-show="isCreatePopup" type="button" class="btn btn-primary mt-10"
+                                    ng-disabled="addContentMangagement.length!=1"
+                                    ng-click="openContentManagementPopup()">Submit</button>
+                                <button type="button" class="mt-10"
+                                    ng-click="cancelopenCreateItem('SelectionData')">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

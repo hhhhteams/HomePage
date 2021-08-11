@@ -1,0 +1,54 @@
+﻿ <script>
+    $(function () {
+        $(".dropdown").hover(
+            function () {
+                $('.dropdown-menu', this).stop(true, true).fadeIn("fast");
+                $(this).toggleClass('open');
+
+            },
+            function () {
+                $('.dropdown-menu', this).stop(true, true).fadeOut("fast");
+                $(this).toggleClass('open');
+
+            });
+    });
+</script>
+<div class="addtoggle pull-right Feedback">
+    <span class="dropdown">
+        <span class="icon-line-align-justify dropdown-toggle page-content hreflink"
+              data-toggle="dropdown"></span>
+        <ul class="dropdown-menu dropdown-menu-right add feedback_dropdown_list">
+            <li id="li-brdr">
+                <a class="hreflink"
+                   ng-click="initiateFeedback('HHHH Feedback SP')" id="edit-text">
+                   <i class="icon-comment-alt" id="font-icon"></i>
+                    HHHH Feedback SP
+                </a>
+            </li>
+            <li id="li-brdr">
+                <a class="hreflink"
+                   ng-click="initiateFeedback('HHHH Component Page')" id="edit-text">
+                   <i class="icon-comment-alt" id="font-icon"></i>
+                    HHHH Component Page
+                </a>
+            </li>
+            <li id="li-brdr">
+                <a class="hreflink" ng-click="initiateFeedback('HHHH Quick')"
+                   id="edit-text">
+                   <i class="icon-comment-alt" id="font-icon"></i>
+                    HHHH Quick
+                </a>
+            </li>
+
+            <li id="li-brdr">
+                <a class="hreflink" ng-click="SharewebAdminHelp()" id="edit-text">
+                    <i class="icon-question-circle" id="font-icon"></i></span>
+                    Admin Help
+                </a>
+            </li>
+        </ul>
+    </span>
+</div>
+
+   
+    

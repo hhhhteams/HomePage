@@ -1,0 +1,17 @@
+﻿<script src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/js/angular/HomePage/ContentProfile.js"></script>
+<script src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/js/angular/Templates/HomePageSearchpopup.js"></script>
+<section id="content">
+    <div id="content-wrap">
+        <div class="container topmargin-sm bottommargin-sm clearfix">
+            <div ng-controller="ContentProfileController" ng-cloak>
+                <h2>
+                    {{Item.Title}}
+                    <a ng-show="Item.Title!=undefined && Item.Title!=''" class="hreflink" ng-click="EditItem(Item)">
+                        <img src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/SiteCollectionImages/ICONS/32/edititem.gif">
+                    </a>
+                </h2>
+                <span ng-bind-html="Item.Description | trustedHTML"></span>
+            </div>
+        </div>
+    </div>
+</section>

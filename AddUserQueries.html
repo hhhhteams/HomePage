@@ -1,0 +1,53 @@
+﻿<div>
+    <div id="section-contact" class="page-section section m-0 bg-color" style="padding: 80px 0 60px 0; background-image: linear-gradient(to bottom, #3D80E4 0%, #0a4bab 80%, #FFF 80%);">
+
+        <div class="container clearfix">
+            <div class="row mx-auto dotted-bg" style="max-width: 740px">
+                <div class="col-md-12">
+                    <div class="center dark mb-5">
+                        <!-- <i class="icon-line-help h1 "></i> -->
+                        <h2 class="font-weight-bold mb-2">Contact</h2>
+                    </div>
+
+                    <div class="card bg-white shadow-lg border-0">
+                        <div class="card-body p-5">
+                            <div class="form-widget" data-loader="button" data-alert-type="inline">
+
+                                <div class="form-result"></div>
+
+                                <ng-form class="row mb-0" id="form-enquiry" action="" method="post">
+                                    <div class="form-process"></div>
+                                    <div class="col-12 form-group mb-4">
+                                        <label>Name:</label>
+                                        <input type="text" name="form-enquiry-name" class="form-control form-control-lg required" value="" ng-model="UserName" placeholder="Enter your Name">
+                                    </div>
+                                    <div class="col-12 form-group mb-4">
+                                        <label>Email:</label>
+                                        <input type="email" name="form-enquiry-email" class="form-control form-control-lg required" value="" ng-model="UserEmail" placeholder="Enter Your Email">
+                                    </div>
+                                    <div class="col-12 form-group mb-4">
+                                        <label>Message:</label>
+                                        <textarea name="form-enquiry-additional-requirements" class="form-control form-control-lg" cols="30" rows="5" ng-model="UserQuery" placeholder="Please let us know how we can help you..."></textarea>
+                                    </div>
+                                    <!--<div class="col-12 form-group mb-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="gridCheck">
+                                            <label class="form-check-label" for="gridCheck">
+                                                <span class="terms-font">I have read the Privacy Policy note. I agree that my contact details and questions will be stored permanently.</span>
+                                            </label>
+                                        </div>
+                                    </div>-->
+                                    <div class="col-12  form-group ">
+                                        <button  name="landing-enquiry-submit" class="btn btn-block text-white bg-color rounded-lg py-3 font-weight-semibold text-uppercase mt-2" ng-click="AddUserQuery()">SEND MESSAGE</button>
+                                    </div>
+
+                                    <!--<input type="hidden" name="prefix" value="Send Message">-->
+                                </ng-form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
